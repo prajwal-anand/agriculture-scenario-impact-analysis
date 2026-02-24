@@ -60,8 +60,6 @@ Calculates percentage change relative to baseline revenue.
 **Why DIVIDE()?**  
 Prevents division-by-zero errors and ensures safe calculation.
 
----
-
 ## 5️⃣ Crop Revenue Impact (Absolute)
 
 ```DAX
@@ -121,6 +119,25 @@ CALCULATE(
 Measures relative impact across locations.
 
 ---
+
+## 9️⃣ Crop Sensitivity Factor
+
+```DAX
+Crop Sensitivity Factor =
+SWITCH(
+    SELECTEDVALUE('AGRICULTURE_ANALYTICS'[CROPS]),
+    "Coconut", 1.10,
+    "Coffee", 1.20,
+    "Rice", 0.95,
+    "Arecanut", 1.05,
+    1.00
+)
+```
+
+**Purpose:**  
+Introduces crop-level differentiated revenue response within the scenario model.
+
+This ensures that each crop reacts uniquely under simulated environmental changes.
 
 ## 🔁 Bookmark Logic (UI Toggle)
 
