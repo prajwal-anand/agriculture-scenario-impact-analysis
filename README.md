@@ -158,9 +158,13 @@ Full DAX implementation details available here:
 
 ## 🚀 Live Power BI App
 
-Access the deployed application here:
+The dashboard has been deployed as a Power BI App.
 
 🔗 https://app.powerbi.com/Redirect?action=OpenApp&appId=3f084f58-be01-44c2-8bcd-3f35a6ce1bc1&ctid=f419c9fe-f7b0-4d87-bee8-e8dfb2190cab&experience=power-bi
+
+**Note:**  
+The application is hosted within my university Microsoft tenant and may require institutional access.  
+If you would like a walkthrough or demonstration, please feel free to contact me.
 
 ---
 
