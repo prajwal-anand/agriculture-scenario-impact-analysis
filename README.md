@@ -65,6 +65,58 @@ This project was designed to:
 
 ---
 
+## 📈 Scenario Analysis & Key Findings
+
+### Scenario Logic
+
+The scenario simulates a controlled environmental and operational shock:
+
+- Rainfall increased by 10%
+- Cultivated area reduced by 10%
+- Rainfall elasticity applied at 0.6
+- Resulting yield increase = 6% (10% × 0.6)
+
+Adjusted yield per area is calculated as:
+
+Adjusted Yield = Base Yield × 1.06
+
+Total scenario production is then computed using the reduced cultivated area, and final scenario revenue is derived accordingly.
+
+---
+
+### Overall Impact
+
+- The scenario resulted in an approximate **5% decline in total revenue**.
+- Yield gains from increased rainfall were insufficient to offset the reduction in cultivated area.
+- This indicates that land availability has a stronger revenue influence than rainfall-driven productivity improvements under the given assumptions.
+
+---
+
+### Crop-Level Findings
+
+- Coconut experienced the largest absolute revenue decline.
+- Coffee showed the highest relative percentage sensitivity.
+- High-revenue crops exhibited greater absolute volatility under operational shocks.
+
+---
+
+### Location-Level Findings
+
+- Hassan district recorded the largest absolute revenue loss.
+- Impact distribution remained consistent across years due to uniform scenario application.
+
+---
+
+### Strategic Insight
+
+This simulation demonstrates that:
+
+- Revenue sensitivity is highly dependent on cultivated area.
+- Environmental improvements alone may not compensate for land contraction.
+- Scenario modeling enables proactive revenue risk assessment before operational decisions are implemented.
+
+---
+
 ## 🧮 Core DAX Logic
 
 Revenue impact percentage is calculated as:
@@ -117,7 +169,8 @@ agriculture-scenario-impact-analysis/
 │
 ├── 03_documentation/
 │   ├── architecture-diagram.png
-│   └── dashboard-overview.png
+│   ├── dashboard-overview.png
+|   └── dax_measures.md
 │
 └── README.md
 ```
