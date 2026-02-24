@@ -16,7 +16,7 @@ Agricultural revenue is highly sensitive to environmental variables such as rain
 
 This project was designed to:
 
-- Simulate controlled scenario changes  
+- Simulate controlled environmental and operational changes  
 - Measure absolute and relative revenue impact  
 - Identify the most affected crops and districts  
 - Enable interactive exploration through a BI application  
@@ -44,93 +44,103 @@ This project was designed to:
 
 ---
 
-## 🔍 Key Metrics
-
-- Total Base Revenue  
-- Total Scenario Revenue  
-- Revenue Impact (Absolute)  
-- Revenue Impact (%)  
-- Impact by Crop (Absolute & Relative)  
-- Impact by Location (Absolute & Relative)  
-- Revenue Trend Analysis Over Time  
-
----
-
 ## 🧠 Scenario Assumptions
 
-- Rainfall increased by **10% across all years**  
-- Cultivated area reduced by **10%**  
-- Crop-level elasticity applied to adjust revenue sensitivity  
-- Impact calculated relative to baseline revenue  
+- Rainfall increased by **10% across all years**
+- Cultivated area reduced by **10%**
+- Impact calculated relative to baseline revenue
 
 ---
 
-## 📈 Scenario Analysis & Key Findings
+## 📈 Scenario Analysis & Modeling Logic
 
-### Scenario Logic
+### Baseline Adjustment Logic
 
 The scenario simulates a controlled environmental and operational shock:
 
-- Rainfall increased by 10%
-- Cultivated area reduced by 10%
-- Rainfall elasticity applied at 0.6
-- Resulting yield increase = 6% (10% × 0.6)
-
-Adjusted yield per area is calculated as:
-
-Adjusted Yield = Base Yield × 1.06
-
-Total scenario production is then computed using the reduced cultivated area, and final scenario revenue is derived accordingly.
+- Rainfall increase assumed at 10%
+- Cultivated land reduced by 10%
+- Revenue impact evaluated against baseline
 
 ---
+
+### 🌱 Crop Sensitivity Modeling (Power BI Layer)
+
+To simulate differentiated crop behavior under the scenario, a dynamic DAX measure was introduced:
+
+```DAX
+Crop Sensitivity Factor =
+SWITCH(
+    SELECTEDVALUE('AGRICULTURE_ANALYTICS'[CROPS]),
+    "Coconut", 1.10,
+    "Coffee", 1.20,
+    "Rice", 0.95,
+    "Arecanut", 1.05,
+    1.00
+)
+```
+
+This measure assigns crop-specific response multipliers to model heterogeneous revenue sensitivity.
+
+### Scenario Revenue Logic
+
+Scenario Revenue is calculated as:
+
+Adjusted Scenario Revenue =  
+Base Revenue × Crop Sensitivity Factor × Area Adjustment
+
+This ensures each crop reacts differently to environmental changes rather than assuming uniform elasticity.
+
+---
+
+## 📊 Key Findings
 
 ### Overall Impact
 
-- The scenario resulted in an approximate **5% decline in total revenue**.
-- Yield gains from increased rainfall were insufficient to offset the reduction in cultivated area.
-- This indicates that land availability has a stronger revenue influence than rainfall-driven productivity improvements under the given assumptions.
+- The scenario resulted in an approximate **5% decline in total revenue**
+- Yield improvements were insufficient to offset cultivated area reduction
+- Land availability showed stronger revenue influence than rainfall improvements
 
 ---
 
-### Crop-Level Findings
+### Crop-Level Insights
 
-- Coconut experienced the largest absolute revenue decline.
-- Coffee showed the highest relative percentage sensitivity.
-- High-revenue crops exhibited greater absolute volatility under operational shocks.
-
----
-
-### Location-Level Findings
-
-- Hassan district recorded the largest absolute revenue loss.
-- Impact distribution remained consistent across years due to uniform scenario application.
+- **Coconut** experienced the largest absolute revenue decline  
+- **Coffee** showed the highest relative sensitivity  
+- High-revenue crops displayed greater absolute volatility  
 
 ---
 
-### Strategic Insight
+### Location-Level Insights
 
-This simulation demonstrates that:
-
-- Revenue sensitivity is highly dependent on cultivated area.
-- Environmental improvements alone may not compensate for land contraction.
-- Scenario modeling enables proactive revenue risk assessment before operational decisions are implemented.
+- **Hassan district** recorded the largest absolute revenue loss  
+- Impact distribution remained consistent across years due to uniform scenario application  
 
 ---
 
 ## 🧮 Core DAX Logic
 
-Revenue impact percentage is calculated as:
+Revenue percentage impact is calculated as:
 
 ```DAX
 Revenue % Impact =
 DIVIDE(
     SUM('AGRICULTURE_ANALYTICS'[SCENARIO_REVENUE])
-    - SUM('AGRICULTURE_ANALYTICS'[BASE_REVENUE]),
+    -
+    SUM('AGRICULTURE_ANALYTICS'[BASE_REVENUE]),
     SUM('AGRICULTURE_ANALYTICS'[BASE_REVENUE])
 )
 ```
 
-This ensures safe division and dynamic recalculation across filters.
+Safe division ensures error handling and dynamic recalculation across filters.
+
+---
+
+## 📊 DAX Measures
+
+Full DAX implementation details available here:
+
+[View DAX Measures](03_documentation/dax_measures.md)
 
 ---
 
@@ -168,21 +178,12 @@ agriculture-scenario-impact-analysis/
 │   └── agriculture-scenario-impact-dashboard.pbix
 │
 ├── 03_documentation/
-│   ├── architecture-diagram.png
 │   ├── dashboard-overview.png
-|   └── dax_measures.md
+│   ├── architecture-diagram.png
+│   └── dax_measures.md
 │
 └── README.md
 ```
-
----
-
-## 📈 Key Insights
-
-- Overall scenario resulted in a **5% revenue decline**
-- Coconut and Coffee experienced the highest relative impact
-- Hassan district recorded the largest absolute revenue loss
-- Impact remained consistent across years due to uniform scenario assumptions
 
 ---
 
@@ -190,7 +191,8 @@ agriculture-scenario-impact-analysis/
 
 - End-to-end data engineering pipeline design  
 - Snowflake layered architecture (RAW → STAGING → CURATED)  
-- Scenario modeling implementation  
+- Scenario-based revenue sensitivity modeling  
+- Crop-level differentiated impact modeling  
 - Advanced Power BI dashboard development  
 - Bookmark-based visual toggling  
 - Conditional formatting for impact visualization  
@@ -201,5 +203,6 @@ agriculture-scenario-impact-analysis/
 ## 👤 Author
 
 **Prajwal Anand**
+Cloud Data Engineering & Analytics | AWS | Snowflake | Power BI
 
 ---
